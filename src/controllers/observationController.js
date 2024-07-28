@@ -2,11 +2,11 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const Joi = require("joi");
 
-const create = async (req, res, next) => {
+const createObservation = async (req, res, next) => {
   try {
     const { date, description, celestialBodyId } = req.body;
 
-    const celestialBody = await prisma.celestialBody.findUnique({
+    const celestialBody = await prisma.celestialBodies.findUnique({
       where: { id: celestialBodyId },
     });
 
@@ -14,7 +14,7 @@ const create = async (req, res, next) => {
       return res.status(404).json({ message: "Celestial body not found" });
     }
 
-    const observation = await prisma.observation.create({
+    const observation = await prisma.observations.create({
       data: {
         date,
         description,
@@ -29,9 +29,9 @@ const create = async (req, res, next) => {
   }
 };
 
-const getAll = async (req, res, next) => {
+const getAllObservation = async (req, res, next) => {
   try {
-    const observations = await prisma.observation.findMany({
+    const observations = await prisma.observations.findMany({
       where: { userId: req.user.userId },
     });
     res.json(observations);
@@ -40,11 +40,11 @@ const getAll = async (req, res, next) => {
   }
 };
 
-const update = async (req, res, next) => {
+const updateObservation = async (req, res, next) => {
   try {
     const { date, description, celestialBodyId } = req.body;
     const { id } = req.params;
-    const observation = await prisma.observation.update({
+    const observation = await prisma.observations.update({
       where: { id },
       data: { date, description, celestialBodyId },
     });
@@ -58,7 +58,7 @@ const deleteObservation = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const observation = await prisma.observation.findUnique({
+    const observation = await prisma.observations.findUnique({
       where: { id },
     });
 
@@ -75,4 +75,9 @@ const deleteObservation = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { create, getAll, update, deleteObservation };
+module.exports = {
+  createObservation,
+  getAllObservation,
+  updateObservation,
+  deleteObservation,
+};

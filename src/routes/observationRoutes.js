@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const {
-  create,
-  getAll,
-  update,
+  createObservation,
+  getAllObservation,
+  updateObservation,
   deleteObservation,
 } = require("../controllers/observationController");
 const validate = require("../middlewares/validationMiddleware");
@@ -17,11 +17,21 @@ const observationSchema = Joi.object({
   celestialBodyId: Joi.string().required(),
 });
 
-router.post("/", authMiddleware, validate(observationSchema), create);
+router.post(
+  "/",
+  authMiddleware,
+  validate(observationSchema),
+  createObservation
+);
 
-router.get("/", authMiddleware, getAll);
+router.get("/", authMiddleware, getAllObservation);
 
-router.put("/:id", authMiddleware, validate(observationSchema), update);
+router.put(
+  "/:id",
+  authMiddleware,
+  validate(observationSchema),
+  updateObservation
+);
 
 router.delete(
   "/:id",

@@ -1,9 +1,9 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const getAll = async (req, res) => {
+const getAllCelestialBodies = async (req, res) => {
   try {
-    const celestialBodies = await prisma.celestialBody.findMany();
+    const celestialBodies = await prisma.celestialBodies.findMany();
     res.json(celestialBodies);
   } catch (err) {
     res.status(500).json({
@@ -13,13 +13,13 @@ const getAll = async (req, res) => {
   }
 };
 
-const create = async (req, res) => {
+const createCelestialBodies = async (req, res) => {
   try {
     const { name } = req.body;
-    const celestialBody = await prisma.celestialBody.create({
+    const celestialBodies = await prisma.celestialBodies.create({
       data: { name },
     });
-    res.status(201).json(celestialBody);
+    res.status(201).json(celestialBodies);
   } catch (err) {
     res
       .status(500)
@@ -27,25 +27,25 @@ const create = async (req, res) => {
   }
 };
 
-const update = async (req, res) => {
+const updateCelestialBodies = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
 
-    const celestialBody = await prisma.celestialBody.findUnique({
+    const celestialBodies = await prisma.celestialBodies.findUnique({
       where: { id },
     });
 
-    if (!celestialBody) {
+    if (!celestialBodies) {
       return res.status(404).json({ message: "Celestial body not found" });
     }
 
-    const updatedCelestialBody = await prisma.celestialBody.update({
+    const updatedcelestialBodies = await prisma.celestialBodies.update({
       where: { id },
       data: { name },
     });
 
-    res.json(updatedCelestialBody);
+    res.json(updatedcelestialBodies);
   } catch (err) {
     res
       .status(500)
@@ -53,23 +53,23 @@ const update = async (req, res) => {
   }
 };
 
-const deleteCelestialBody = async (req, res, next) => {
+const deleteCelestialBodies = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const celestialBody = await prisma.celestialBody.findUnique({
+    const celestialBodies = await prisma.celestialBodies.findUnique({
       where: { id },
     });
 
-    if (!celestialBody) {
+    if (!celestialBodies) {
       return res.status(404).json({ message: "Celestial body not found" });
     }
 
     await prisma.observation.deleteMany({
-      where: { celestialBodyId: id },
+      where: { celestialBodiesId: id },
     });
 
-    await prisma.celestialBody.delete({
+    await prisma.celestialBodies.delete({
       where: { id },
     });
 
@@ -78,4 +78,9 @@ const deleteCelestialBody = async (req, res, next) => {
     next(err);
   }
 };
-module.exports = { getAll, create, update, deleteCelestialBody };
+module.exports = {
+  getAllCelestialBodies,
+  createCelestialBodies,
+  updateCelestialBodies,
+  deleteCelestialBodies,
+};
