@@ -1,6 +1,5 @@
-Aquí tienes una descripción en formato Markdown para cada endpoint de tu API RESTful que puedes agregar al README de tu proyecto:
 
-```markdown
+
 # API RESTful para Observaciones Astronómicas
 
 ## Endpoints
@@ -172,4 +171,4 @@ Aquí tienes una descripción en formato Markdown para cada endpoint de tu API R
     "message": "Observation deleted successfully"
   }
   ```
-```
+
