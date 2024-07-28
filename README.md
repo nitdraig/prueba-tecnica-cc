@@ -3,7 +3,9 @@
 
 
 ## *Prueba técnica*
+
 ## Enunciado
+
 ### 1) Se deberá crear una API RestFull, de observaciones astronómicas que permita a los usuarios crear observaciones y hacer consultas de éstas.
 - La base de datos En PostgreSQL deberá tener 3 tablas (user, celestialBodies, observations).
 **Relaciones de la base de datos:**
@@ -45,6 +47,9 @@ npm i
 ```npm
 npm run start
 ```
+### Link de tests postman
+https://www.postman.com/payload-astronomer-22029507/workspace/prueba-cc/collection/30265373-639124c7-aba9-416b-9a7e-89a4999ee77c?action=share&creator=30265373
+
 ## Endpoints
 ### 1. **Registrar Usuario**
 

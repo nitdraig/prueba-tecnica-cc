@@ -4,12 +4,26 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const register = async (req, res) => {
-  const { email, password, role } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await prisma.user.create({
-    data: { email, password: hashedPassword, role },
-  });
-  res.status(201).json(user);
+  try {
+    const { email, password, role } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        role,
+      },
+    });
+
+    res.status(201).json(user);
+  } catch (error) {
+    if (error.code === "P2002" && error.meta.target.includes("email")) {
+      res.status(409).json({ message: "Email already exists" });
+    } else {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
 };
 
 const login = async (req, res) => {
