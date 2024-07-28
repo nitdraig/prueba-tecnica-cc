@@ -2,8 +2,49 @@
 # API RESTful - Observaciones Astronómicas
 
 
-*Prueba técnica*
+## *Prueba técnica*
+## Enunciado
+### 1) Se deberá crear una API RestFull, de observaciones astronómicas que permita a los usuarios crear observaciones y hacer consultas de éstas.
+- La base de datos En PostgreSQL deberá tener 3 tablas (user, celestialBodies, observations).
+**Relaciones de la base de datos:**
+  Usuarios -   Observaciones: Un usuario puede tener múltiples observaciones.
+  Cuerpos celestes  - Observaciones: Un cuerpo celeste puede ser observado en múltiples ocasiones.
 
+--> El objetivo es que mediante el desarrollo del código un usuario se pueda registrar y loguear.
+--> Se debe poder crear una observación, obtenerla, modificarla y para eliminarla solo lo podrá hacer un usuario que tenga el rol de Administrador.
+--> Se deben implementar middlewares de manejo de errores, validaciones, y autenticaciones de roles.
+
+
+### 2) La estructura del código es algo importante para trabajar de manera ordenada y eficiente; por eso mismo el formato
+de carpetas que debera presentarse es el siguiente:
+/index.js: en este archivo va lo relacionado con el servidor. Crearlo y levantarlo.
+/middlewares: una carpeta con los middlewares a utilizar. Cada función middleware debe estar con un archivo propio.
+/routes: carpeta con los endpoints.
+/controllers: carpeta con la lógica de cada endpoint. Es decir el código para manejar las rutas de las peticiones.
+.env: archivo con las variables de entorno que no se deben mostrar.
+
+## Uso
+### Clonar repositorio
+
+```git
+git clone https://github.com/nitdraig/prueba-tecnica-cc.git
+```
+
+### Ingresar en carpeta clonada
+```npm
+cd prueba-tecnica-cc
+```
+
+### Instalar dependencias 
+
+```npm
+npm i
+```
+### Iniciar el proyecto
+
+```npm
+npm run start
+```
 ## Endpoints
 ### 1. **Registrar Usuario**
 
@@ -86,7 +127,40 @@
   ]
   ```
 
-### 5. **Crear una Observación**
+  ### 5. **Modificar los Cuerpos Celestes**
+
+- **Método:** `PUT`
+- **URL:** `/api/celestialBodies/:id`
+- **Descripción:** Actualiza un cuerpo celeste registrados en el sistema por ID. Solo accesible para administradores.
+- **Encabezados (Headers):**
+  - `Authorization: Bearer your_jwt_token`
+- **Respuesta:**
+  ```json
+  [
+    {
+      "id": "celestial_body_id",
+      "name": "Mars"
+    }
+  ]
+  ```
+
+  
+### 6. **Eliminar una Observación (Solo Administradores)**
+
+- **Método:** `DELETE`
+- **URL:** `/api/celestialBodies/:id`
+- **Descripción:** Elimina un cuerpo celeste existente. Solo accesible para administradores.
+- **Encabezados (Headers):**
+  - `Authorization: Bearer your_jwt_token`
+- **Respuesta:**
+  ```json
+  {
+      "message": "Celestial body deleted successfully"
+  }
+  ```
+
+
+### 7. **Crear una Observación**
 
 - **Método:** `POST`
 - **URL:** `/api/observations`
@@ -112,7 +186,7 @@
   }
   ```
 
-### 6. **Obtener Todas las Observaciones del Usuario**
+### 8. **Obtener Todas las Observaciones del Usuario**
 
 - **Método:** `GET`
 - **URL:** `/api/observations`
@@ -132,7 +206,7 @@
   ]
   ```
 
-### 7. **Actualizar una Observación**
+### 9. **Actualizar una Observación**
 
 - **Método:** `PUT`
 - **URL:** `/api/observations/:id`
@@ -158,7 +232,7 @@
   }
   ```
 
-### 8. **Eliminar una Observación (Solo Administradores)**
+### 10. **Eliminar una Observación (Solo Administradores)**
 
 - **Método:** `DELETE`
 - **URL:** `/api/observations/:id`

@@ -53,10 +53,10 @@ const update = async (req, res) => {
   }
 };
 
-const deleteCelestialBody = async (req, res) => {
-  try {
-    const { id } = req.params;
+const deleteCelestialBody = async (req, res, next) => {
+  const { id } = req.params;
 
+  try {
     const celestialBody = await prisma.celestialBody.findUnique({
       where: { id },
     });
@@ -65,16 +65,17 @@ const deleteCelestialBody = async (req, res) => {
       return res.status(404).json({ message: "Celestial body not found" });
     }
 
+    await prisma.observation.deleteMany({
+      where: { celestialBodyId: id },
+    });
+
     await prisma.celestialBody.delete({
       where: { id },
     });
 
     res.json({ message: "Celestial body deleted successfully" });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Error deleting celestial body", error: err.message });
+    next(err);
   }
 };
-
 module.exports = { getAll, create, update, deleteCelestialBody };
