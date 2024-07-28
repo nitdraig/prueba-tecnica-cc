@@ -1,56 +1,58 @@
-
 # API RESTful - Observaciones Astronómicas
-
 
 ## *Prueba técnica*
 
 ## Enunciado
 
 ### 1) Se deberá crear una API RestFull, de observaciones astronómicas que permita a los usuarios crear observaciones y hacer consultas de éstas.
-- La base de datos En PostgreSQL deberá tener 3 tablas (user, celestialBodies, observations).
+- La base de datos en PostgreSQL deberá tener 3 tablas (users, celestialBodies, observations).
 **Relaciones de la base de datos:**
-  Usuarios -   Observaciones: Un usuario puede tener múltiples observaciones.
-  Cuerpos celestes  - Observaciones: Un cuerpo celeste puede ser observado en múltiples ocasiones.
+  - Usuarios - Observaciones: Un usuario puede tener múltiples observaciones.
+  - Cuerpos celestes - Observaciones: Un cuerpo celeste puede ser observado en múltiples ocasiones.
 
 --> El objetivo es que mediante el desarrollo del código un usuario se pueda registrar y loguear.
 --> Se debe poder crear una observación, obtenerla, modificarla y para eliminarla solo lo podrá hacer un usuario que tenga el rol de Administrador.
---> Se deben implementar middlewares de manejo de errores, validaciones, y autenticaciones de roles.
+--> Se deben implementar middlewares de manejo de errores, validaciones y autenticaciones de roles.
 
-
-### 2) La estructura del código es algo importante para trabajar de manera ordenada y eficiente; por eso mismo el formato
-de carpetas que debera presentarse es el siguiente:
-/index.js: en este archivo va lo relacionado con el servidor. Crearlo y levantarlo.
-/middlewares: una carpeta con los middlewares a utilizar. Cada función middleware debe estar con un archivo propio.
-/routes: carpeta con los endpoints.
-/controllers: carpeta con la lógica de cada endpoint. Es decir el código para manejar las rutas de las peticiones.
-.env: archivo con las variables de entorno que no se deben mostrar.
+### 2) La estructura del código es algo importante para trabajar de manera ordenada y eficiente; por eso mismo, el formato de carpetas que deberá presentarse es el siguiente:
+- /index.js: en este archivo va lo relacionado con el servidor. Crearlo y levantarlo.
+- /middlewares: una carpeta con los middlewares a utilizar. Cada función middleware debe estar en un archivo propio.
+- /routes: carpeta con los endpoints.
+- /controllers: carpeta con la lógica de cada endpoint. Es decir, el código para manejar las rutas de las peticiones.
+- .env: archivo con las variables de entorno que no se deben mostrar.
 
 ## Uso
+
 ### Clonar repositorio
 
-```git
+```sh
 git clone https://github.com/nitdraig/prueba-tecnica-cc.git
 ```
 
 ### Ingresar en carpeta clonada
-```npm
+
+```sh
 cd prueba-tecnica-cc
 ```
 
-### Instalar dependencias 
+### Instalar dependencias
 
-```npm
-npm i
+```sh
+npm install
 ```
+
 ### Iniciar el proyecto
 
-```npm
+```sh
 npm run start
 ```
-### Link de tests postman
-https://www.postman.com/payload-astronomer-22029507/workspace/prueba-cc/collection/30265373-639124c7-aba9-416b-9a7e-89a4999ee77c?action=share&creator=30265373
+
+### Link de tests Postman
+
+[https://www.postman.com/payload-astronomer-22029507/workspace/prueba-cc/collection/30265373-639124c7-aba9-416b-9a7e-89a4999ee77c?action=share&creator=30265373](https://www.postman.com/payload-astronomer-22029507/workspace/prueba-cc/collection/30265373-639124c7-aba9-416b-9a7e-89a4999ee77c?action=share&creator=30265373)
 
 ## Endpoints
+
 ### 1. **Registrar Usuario**
 
 - **Método:** `POST`
@@ -132,25 +134,28 @@ https://www.postman.com/payload-astronomer-22029507/workspace/prueba-cc/collecti
   ]
   ```
 
-  ### 5. **Modificar los Cuerpos Celestes**
+### 5. **Modificar un Cuerpo Celeste**
 
 - **Método:** `PUT`
 - **URL:** `/api/celestialBodies/:id`
-- **Descripción:** Actualiza un cuerpo celeste registrados en el sistema por ID. Solo accesible para administradores.
+- **Descripción:** Actualiza un cuerpo celeste registrado en el sistema por ID. Solo accesible para administradores.
 - **Encabezados (Headers):**
   - `Authorization: Bearer your_jwt_token`
+- **Cuerpo (Body):**
+  ```json
+  {
+    "name": "Updated name"
+  }
+  ```
 - **Respuesta:**
   ```json
-  [
-    {
-      "id": "celestial_body_id",
-      "name": "Mars"
-    }
-  ]
+  {
+    "id": "celestial_body_id",
+    "name": "Updated name"
+  }
   ```
 
-  
-### 6. **Eliminar una Observación (Solo Administradores)**
+### 6. **Eliminar un Cuerpo Celeste (Solo Administradores)**
 
 - **Método:** `DELETE`
 - **URL:** `/api/celestialBodies/:id`
@@ -160,10 +165,9 @@ https://www.postman.com/payload-astronomer-22029507/workspace/prueba-cc/collecti
 - **Respuesta:**
   ```json
   {
-      "message": "Celestial body deleted successfully"
+    "message": "Celestial body deleted successfully"
   }
   ```
-
 
 ### 7. **Crear una Observación**
 
