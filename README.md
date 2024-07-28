@@ -1,8 +1,13 @@
 
+<<<<<<< HEAD
 # API RESTful - Observaciones Astronómicas
 
 
 *Prueba técnica*
+=======
+
+# API RESTful para Observaciones Astronómicas
+>>>>>>> a9cef2c6dd294e3872b9b6ad4395f7b0a913ca16
 
 ## Endpoints
 ### 1. **Registrar Usuario**
@@ -172,3 +177,7 @@
     "message": "Observation deleted successfully"
   }
   ```
+<<<<<<< HEAD
+=======
+
+>>>>>>> a9cef2c6dd294e3872b9b6ad4395f7b0a913ca16
