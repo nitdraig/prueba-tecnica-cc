@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  password     String
+  role         String        @default("user")
+  observations Observation[]
+}
+
+model CelestialBody {
+  id           String        @id @default(uuid())
+  name         String
+  observations Observation[]
+}
+
+model Observation {
+  id              String        @id @default(uuid())
+  date            DateTime
+  description     String
+  userId          String
+  celestialBodyId String
+  user            User          @relation(fields: [userId], references: [id])
+  celestialBody   CelestialBody @relation(fields: [celestialBodyId], references: [id])
+}
