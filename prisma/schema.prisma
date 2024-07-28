@@ -25,8 +25,8 @@ model Observation {
   id              String        @id @default(uuid())
   date            DateTime
   description     String
-  userId          String
+  celestialBody   CelestialBody @relation(fields: [celestialBodyId], references: [id])
   celestialBodyId String
   user            User          @relation(fields: [userId], references: [id])
-  celestialBody   CelestialBody @relation(fields: [celestialBodyId], references: [id])
+  userId          String
 }
