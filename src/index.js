@@ -1,15 +1,15 @@
 const express = require("express");
 const app = express();
 const userRoutes = require("./routes/userRoutes");
-const celestialBodyRoutes = require("./routes/celestialBodiesRoutes");
-const observationRoutes = require("./routes/observationRoutes");
+const celestialBodiesRoutes = require("./routes/celestialBodiesRoutes");
+const observationsRoutes = require("./routes/observationsRoutes");
 const errorMiddleware = require("./middlewares/errorMiddleware");
 
 app.use(express.json());
 
 app.use("/api/users", userRoutes);
-app.use("/api/celestialBodies", celestialBodyRoutes);
-app.use("/api/observations", observationRoutes);
+app.use("/api/celestialBodies", celestialBodiesRoutes);
+app.use("/api/observations", observationsRoutes);
 
 app.use(errorMiddleware);
 

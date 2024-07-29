@@ -11,7 +11,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 const roleMiddleware = require("../middlewares/roleMiddleware");
 const Joi = require("joi");
 
-const observationSchema = Joi.object({
+const observationsSchema = Joi.object({
   date: Joi.date().required(),
   description: Joi.string().required(),
   celestialBodyId: Joi.string().required(),
@@ -20,7 +20,7 @@ const observationSchema = Joi.object({
 router.post(
   "/",
   authMiddleware,
-  validate(observationSchema),
+  validate(observationsSchema),
   createObservation
 );
 
@@ -29,7 +29,7 @@ router.get("/", authMiddleware, getAllObservation);
 router.put(
   "/:id",
   authMiddleware,
-  validate(observationSchema),
+  validate(observationsSchema),
   updateObservation
 );
 
