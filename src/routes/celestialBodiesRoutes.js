@@ -2,29 +2,29 @@ const express = require("express");
 const router = express.Router();
 const authMiddleware = require("../middlewares/authMiddleware");
 const roleMiddleware = require("../middlewares/roleMiddleware");
-const celestialBodyController = require("../controllers/celestialBodyController");
+const celestialBodiesController = require("../controllers/celestialBodiesController");
 
-router.get("/", celestialBodyController.getAllCelestialBodies);
+router.get("/", celestialBodiesController.getAllCelestialBodies);
 
 router.post(
   "/",
   authMiddleware,
   roleMiddleware("admin"),
-  celestialBodyController.createCelestialBodies
+  celestialBodiesController.createCelestialBodies
 );
 
 router.put(
   "/:id",
   authMiddleware,
   roleMiddleware("admin"),
-  celestialBodyController.updateCelestialBodies
+  celestialBodiesController.updateCelestialBodies
 );
 
 router.delete(
   "/:id",
   authMiddleware,
   roleMiddleware("admin"),
-  celestialBodyController.deleteCelestialBodies
+  celestialBodiesController.deleteCelestialBodies
 );
 
 module.exports = router;

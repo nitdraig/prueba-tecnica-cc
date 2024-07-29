@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const userRoutes = require("./routes/userRoutes");
-const celestialBodyRoutes = require("./routes/celestialBodyRoutes");
+const celestialBodyRoutes = require("./routes/celestialBodiesRoutes");
 const observationRoutes = require("./routes/observationRoutes");
 const errorMiddleware = require("./middlewares/errorMiddleware");
 
