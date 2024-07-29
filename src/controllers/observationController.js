@@ -2,6 +2,11 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const Joi = require("joi");
 
+const observationSchema = Joi.object({
+  date: Joi.date().required(),
+  description: Joi.string().required(),
+  celestialBodyId: Joi.string().required(),
+});
 const createObservation = async (req, res, next) => {
   try {
     const { date, description, celestialBodyId } = req.body;
@@ -18,7 +23,7 @@ const createObservation = async (req, res, next) => {
       data: {
         date,
         description,
-        celestialBodyId,
+        celestialBodiesId: celestialBodyId,
         userId: req.user.userId,
       },
     });
@@ -42,13 +47,38 @@ const getAllObservation = async (req, res, next) => {
 
 const updateObservation = async (req, res, next) => {
   try {
+    const { error } = observationSchema.validate(req.body);
+    if (error) {
+      return res
+        .status(400)
+        .json({ message: `Validation error: ${error.message}` });
+    }
+
     const { date, description, celestialBodyId } = req.body;
     const { id } = req.params;
-    const observation = await prisma.observations.update({
+
+    const existingObservation = await prisma.observations.findUnique({
       where: { id },
-      data: { date, description, celestialBodyId },
     });
-    res.json(observation);
+
+    if (!existingObservation) {
+      return res.status(404).json({ message: "Observation not found" });
+    }
+
+    const celestialBody = await prisma.celestialBodies.findUnique({
+      where: { id: celestialBodyId },
+    });
+
+    if (!celestialBody) {
+      return res.status(404).json({ message: "Celestial body not found" });
+    }
+
+    const updatedObservation = await prisma.observations.update({
+      where: { id },
+      data: { date, description, celestialBodiesId: celestialBodyId },
+    });
+
+    res.json(updatedObservation);
   } catch (err) {
     next(err);
   }
@@ -66,7 +96,7 @@ const deleteObservation = async (req, res, next) => {
       return res.status(404).json({ message: "Observation not found" });
     }
 
-    await prisma.observation.delete({
+    await prisma.observations.delete({
       where: { id },
     });
 
@@ -75,6 +105,7 @@ const deleteObservation = async (req, res, next) => {
     next(err);
   }
 };
+
 module.exports = {
   createObservation,
   getAllObservation,
